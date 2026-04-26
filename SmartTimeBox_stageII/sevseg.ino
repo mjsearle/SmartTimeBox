@@ -181,7 +181,7 @@ void preset_ack(unsigned char preset_num)
 {
     auto unsigned char persist = 0;
     blankdisplay(1);
-    for (persist==0;persist<30;persist++)
+    for (persist==0;persist<40;persist++)
     {
       digitalWrite(digit4, LOW);
       writeletterp(); 
@@ -200,8 +200,13 @@ void preset_ack(unsigned char preset_num)
       delayMicroseconds(brightness_off_time);
       digitalWrite(digit3, HIGH);
       delayMicroseconds(brightness_on_time);
-
-      write_digit(preset_num,digit3,digit4); 
+      if(!preset_just_pressed)
+      {
+        write_digit(preset_num,digit3,digit4); 
+      }
+      else {
+        write_digit(preset_num+4,digit3,digit4);
+      }
     }
 }
 
