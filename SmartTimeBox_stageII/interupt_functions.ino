@@ -38,7 +38,15 @@ void preset1act()
             ModifyPresetAct(standard_times[0].preset_times);
 
     }  
-    current_standardtime=0;  
+    if (!preset_just_pressed) {  
+     current_standardtime=1;
+     last_preset_time = millis();
+     preset_just_pressed = 1;
+    }
+    else {
+      current_standardtime=0;
+    }      
+
     PresetAct(standard_times[current_standardtime].preset_times);
     CheckAfterLightTimeChange();
 }    
@@ -50,7 +58,15 @@ void preset2act()
     {
             ModifyPresetAct(standard_times[5].preset_times);
     } 
-    current_standardtime=5;  
+    if (!preset_just_pressed) {  
+     current_standardtime=4;
+     last_preset_time = millis();
+     preset_just_pressed = 1;
+    }
+    else {
+      current_standardtime=2;
+    }      
+
     PresetAct(standard_times[current_standardtime].preset_times);
     CheckAfterLightTimeChange();
 }    
@@ -62,7 +78,14 @@ void preset3act()
     {
       ModifyPresetAct(standard_times[7].preset_times);
     }
-    current_standardtime=7;  
+    if (!preset_just_pressed) {  
+      current_standardtime=6;
+      last_preset_time = millis();
+      preset_just_pressed = 1;
+    }
+    else {
+      current_standardtime=4;
+    }       
     PresetAct(standard_times[current_standardtime].preset_times);
     CheckAfterLightTimeChange();
 }    
@@ -70,11 +93,18 @@ void preset3act()
 void preset4act()
 {
     preset_ack(4);
-    if                                                    ( analogRead (6) < 0xFF ) 
+    if ( analogRead (6) < 0xFF ) 
     {
       ModifyPresetAct(standard_times[13].preset_times);
     }
-    current_standardtime=13;  
+    if (!preset_just_pressed) {  
+      current_standardtime=14;
+      last_preset_time = millis();
+      preset_just_pressed = 1;
+    }
+    else {
+      current_standardtime=9;
+    }    
     PresetAct(standard_times[current_standardtime].preset_times); 
     CheckAfterLightTimeChange();
 }    

@@ -181,7 +181,7 @@ void preset_ack(unsigned char preset_num)
 {
     auto unsigned char persist = 0;
     blankdisplay(1);
-    for (persist==0;persist<100;persist++)
+    for (persist==0;persist<30;persist++)
     {
       digitalWrite(digit4, LOW);
       writeletterp(); 

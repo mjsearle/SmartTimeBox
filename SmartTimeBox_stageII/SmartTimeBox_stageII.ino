@@ -1,5 +1,5 @@
 // TM Smart Timebox
-// 2013,2014 by Mark Searle
+// 2013,2014,2015,2016,2026 by Mark Searle
 
 // defines for setting and clearing register bits
 #ifndef cbi
@@ -73,9 +73,10 @@ struct preset_array {
 
 struct timearray storedtimes[64];   // Store the time on the stopwatch each time it is reset
 
-struct preset_array standard_times[20] = {
+struct preset_array standard_times[21] = {
                                            {{ {{0, 5, 0, 0}} , {{5, 5, 0, 0}} , {{0, 0, 1, 0}} }}, 
-                                           {{ {{0, 4, 1, 0}} , {{0, 5, 1, 0}} , {{0, 0, 2, 0}} }},
+                                           {{ {{0, 0, 1, 0}} , {{0, 3, 1, 0}} , {{0, 0, 2, 0}} }},
+                                           {{ {{5, 4, 1, 0}} , {{0, 2, 2, 0}} , {{0, 0, 3, 0}} }},
                                            {{ {{0, 0, 2, 0}} , {{0, 0, 3, 0}} , {{0, 0, 4, 0}} }},
                                            {{ {{0, 0, 3, 0}} , {{0, 0, 4, 0}} , {{0, 0, 5, 0}} }},
                                            {{ {{0, 0, 4, 0}} , {{0, 0, 5, 0}} , {{0, 0, 6, 0}} }},
@@ -123,6 +124,9 @@ static volatile unsigned char current_standardtime = 13;
 static volatile unsigned char ten_mm_ledstate = 0;
 
 // 0 no 10mm LED on. 1 green on, 2 yellow on, 3 red on
+
+static volatile unsigned char preset_just_pressed = 0;
+static unsigned long last_preset_time = 0;
 
 // Handler for pin change interputs.
 
@@ -212,6 +216,10 @@ void loop() {
   {  
     if ( flash == 10 ) 
     {
+        // Time out the preset just pressed flag
+        if (preset_just_pressed && ((millis() - last_preset_time > 1000))) {
+            preset_just_pressed = 0;
+        }
       CheckAnalogSixandSeven();
     } 
     write_time(time);
