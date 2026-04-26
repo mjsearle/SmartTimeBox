@@ -33,79 +33,83 @@ void tick()
 void preset1act()
 {
     preset_ack(1);  
-    if (digitalRead(preset1) == LOW ) // If button still held down after displaying ps1, then user wants to reprogram the preset with current times
+    if (digitalRead(preset1) == LOW && !saw_but_release) // If button still held down after displaying ps1, then user wants to reprogram the preset with current times
     {
-            ModifyPresetAct(standard_times[0].preset_times);
+            ModifyPresetAct(but_preset_times[0].preset_times);
+            return;
 
     }  
     if (!preset_just_pressed) {  
-     current_standardtime=1;
+     current_presettime=0;
      last_preset_time = millis();
      preset_just_pressed = 1;
     }
     else {
-      current_standardtime=0;
+      current_presettime=4;
     }      
 
-    PresetAct(standard_times[current_standardtime].preset_times);
+    PresetAct(but_preset_times[current_presettime].preset_times);
     CheckAfterLightTimeChange();
 }    
 
 void preset2act()
 {
     preset_ack(2);
-    if (digitalRead(preset2) == LOW )
+    if (digitalRead(preset2) == LOW && !saw_but_release)
     {
-            ModifyPresetAct(standard_times[5].preset_times);
+            ModifyPresetAct(but_preset_times[1].preset_times);
+            return;
     } 
     if (!preset_just_pressed) {  
-     current_standardtime=4;
+     current_presettime=1;
      last_preset_time = millis();
      preset_just_pressed = 1;
     }
     else {
-      current_standardtime=2;
+      current_presettime=5;
     }      
 
-    PresetAct(standard_times[current_standardtime].preset_times);
+    PresetAct(but_preset_times[current_presettime].preset_times);
     CheckAfterLightTimeChange();
 }    
 
 void preset3act()
 {
     preset_ack(3);
-    if ( analogRead (7) < 0xFF ) 
+    if ( analogRead (7) < 0xF0  && !saw_but_release) 
     {
-      ModifyPresetAct(standard_times[7].preset_times);
+      ModifyPresetAct(but_preset_times[2].preset_times);
+      return;
     }
     if (!preset_just_pressed) {  
-      current_standardtime=6;
+      current_presettime=2;
       last_preset_time = millis();
       preset_just_pressed = 1;
     }
     else {
-      current_standardtime=4;
+      current_presettime=6;
     }       
-    PresetAct(standard_times[current_standardtime].preset_times);
+    PresetAct(but_preset_times[current_presettime].preset_times);
     CheckAfterLightTimeChange();
 }    
 
 void preset4act()
 {
     preset_ack(4);
-    if ( analogRead (6) < 0xFF ) 
+    if ( analogRead (6) < 0xF0 && !saw_but_release) 
     {
-      ModifyPresetAct(standard_times[13].preset_times);
+      ModifyPresetAct(but_preset_times[3].preset_times);
+      return;
     }
     if (!preset_just_pressed) {  
-      current_standardtime=14;
+      current_presettime=3;
       last_preset_time = millis();
       preset_just_pressed = 1;
     }
     else {
-      current_standardtime=9;
+      current_presettime=7;
     }    
-    PresetAct(standard_times[current_standardtime].preset_times); 
+    PresetAct(but_preset_times[current_presettime].preset_times); 
     CheckAfterLightTimeChange();
 }    
 

@@ -180,8 +180,9 @@ void blankdisplay( unsigned int blanktime_microsec )
 void preset_ack(unsigned char preset_num)
 {
     auto unsigned char persist = 0;
+    saw_but_release = 0;
     blankdisplay(1);
-    for (persist==0;persist<40;persist++)
+    for (persist==0;persist<60;persist++)
     {
       digitalWrite(digit4, LOW);
       writeletterp(); 
@@ -206,6 +207,25 @@ void preset_ack(unsigned char preset_num)
       }
       else {
         write_digit(preset_num+4,digit3,digit4);
+      }
+    // Detect if second press occurs while displaying PS ack
+      switch (preset_num) {
+        case 1:
+          if (!saw_but_release && digitalRead(preset1) == HIGH)  {  saw_but_release = 1; }
+          else if ( saw_but_release && digitalRead(preset1) == LOW) { last_preset_time = millis(); preset_just_pressed = 1; }
+        break; 
+        case 2:
+          if (!saw_but_release && digitalRead(preset2) == HIGH)  {  saw_but_release = 1; }
+          else if ( saw_but_release && digitalRead(preset2) == LOW) { last_preset_time = millis(); preset_just_pressed = 1; }
+        break;   
+        case 3:
+          if (!saw_but_release && analogRead (7) >= 0xF0)  {  saw_but_release = 1; }
+          else if ( saw_but_release && analogRead (7) < 0xF0) { last_preset_time = millis(); preset_just_pressed = 1; }
+        break; 
+        case 4:
+          if (!saw_but_release && analogRead (6) >= 0xF0)  {  saw_but_release = 1; }
+          else if ( saw_but_release && analogRead (6) < 0xF0) { last_preset_time = millis(); preset_just_pressed = 1; }
+        break;       
       }
     }
 }

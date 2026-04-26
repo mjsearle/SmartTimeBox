@@ -67,8 +67,8 @@ void LightTimeDecrease( unsigned char *timecolour)
 
 void CheckAnalogSixandSeven()
 {
-        if (analogRead (7) < 0xFF ) { preset3act(); }
-        if (analogRead (6) < 0xFF ) { preset4act(); }
+        if (analogRead (7) < 0xF0 ) { preset3act(); }
+        if (analogRead (6) < 0xF0 ) { preset4act(); }
 }  
 
 void TimeColourWrite(unsigned char *timecolour)

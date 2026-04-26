@@ -96,6 +96,17 @@ struct preset_array standard_times[21] = {
                                            {{ {{0, 0, 8, 1}} , {{0, 0, 9, 1}} , {{0, 0, 0, 2}} }},                                           
                                            {{ {{0, 0, 3, 2}} , {{0, 0, 4, 2}} , {{0, 0, 5, 2}} }}, 
                                          }; 
+                                         
+struct preset_array but_preset_times[8] = {
+                                           {{ {{0, 0, 1, 0}} , {{0, 3, 1, 0}} , {{0, 0, 2, 0}} }},     // 2 min TT         0
+                                           {{ {{5, 4, 1, 0}} , {{0, 2, 2, 0}} , {{0, 0, 3, 0}} }},     // 3 min segment    1 
+                                           {{ {{0, 0, 5, 0}} , {{0, 0, 6, 0}} , {{0, 0, 7, 0}} }},      // 7 min speech    2 
+                                           {{ {{0, 0, 3, 1}} , {{0, 0, 4, 1}} , {{0, 0, 5, 1}} }},      // 15 min          3
+                                           {{ {{0, 5, 0, 0}} , {{5, 5, 0, 0}} , {{0, 0, 1, 0}} }},      // 1 min TT        4 
+                                           {{ {{0, 0, 3, 0}} , {{0, 0, 4, 0}} , {{0, 0, 5, 0}} }},      // 5min speech     5
+                                           {{ {{0, 0, 7, 0}} , {{0, 0, 8, 0}} , {{0, 0, 9, 0}} }},     // 9 min speech     6
+                                           {{ {{0, 0, 8, 0}} , {{0, 0, 9, 0}} , {{0, 0, 0, 1}} }},      // 10 min speech   7
+                                         }; 
 
 
 static volatile unsigned char stored_count = 0;
@@ -117,6 +128,7 @@ unsigned char flash = 0;   // Used by main loop for generating flashing effect
 static volatile unsigned char currentmode = 0;
 
 static volatile unsigned char current_standardtime = 13;
+static volatile unsigned char current_presettime = 3;
 
 // 0  = Displaying Stopwatch. 1  = Displaying/Setting Green Light Time. 2  = Displaying/Setting  Yellow Time. 3  = Displaying/Setting Red time.
 // 4 = Displaying previous speech times. 5  = Setting brightness.
@@ -126,6 +138,7 @@ static volatile unsigned char ten_mm_ledstate = 0;
 // 0 no 10mm LED on. 1 green on, 2 yellow on, 3 red on
 
 static volatile unsigned char preset_just_pressed = 0;
+static volatile unsigned char saw_but_release = 0;
 static unsigned long last_preset_time = 0;
 
 // Handler for pin change interputs.
