@@ -41,11 +41,13 @@ void preset1act()
     }  
     if (!preset_just_pressed) {  
      current_presettime=0;
+     current_standardtime=1;
      last_preset_time = millis();
      preset_just_pressed = 1;
     }
     else {
       current_presettime=4;
+      current_standardtime=0;
     }      
 
     PresetAct(but_preset_times[current_presettime].preset_times);
@@ -62,11 +64,13 @@ void preset2act()
     } 
     if (!preset_just_pressed) {  
      current_presettime=1;
+     current_standardtime=2;
      last_preset_time = millis();
      preset_just_pressed = 1;
     }
     else {
       current_presettime=5;
+      current_standardtime=4;
     }      
 
     PresetAct(but_preset_times[current_presettime].preset_times);
@@ -83,11 +87,13 @@ void preset3act()
     }
     if (!preset_just_pressed) {  
       current_presettime=2;
+      current_standardtime=6;
       last_preset_time = millis();
       preset_just_pressed = 1;
     }
     else {
       current_presettime=6;
+      current_standardtime=8;
     }       
     PresetAct(but_preset_times[current_presettime].preset_times);
     CheckAfterLightTimeChange();
@@ -103,11 +109,13 @@ void preset4act()
     }
     if (!preset_just_pressed) {  
       current_presettime=3;
+      current_standardtime=14;
       last_preset_time = millis();
       preset_just_pressed = 1;
     }
     else {
       current_presettime=7;
+      current_standardtime=9;
     }    
     PresetAct(but_preset_times[current_presettime].preset_times); 
     CheckAfterLightTimeChange();
@@ -212,8 +220,8 @@ void plusact()
     {
       SaveTimeToStore();
       time[3] = 0; time[2] = 0; time[1] = 0; time[0] = 0;    // reset the stopwatch
-      sei();         // Enable interupts again as writing to LEDS needs them
       Timer1.stop();
+      sei();         // Enable interupts again as writing to LEDs needs them
       LED_AllOff();   // Turn all LED off again.
       ten_mm_ledstate=0;
     }
@@ -224,7 +232,7 @@ void plusact()
   }
   if ( currentmode == 1 )
   {
-    if ( current_standardtime == 19 ) { current_standardtime == 0; }
+    if ( current_standardtime == 20 ) { current_standardtime == 0; }
     else { current_standardtime++; }
     PresetAct(standard_times[current_standardtime].preset_times);
     CheckAfterLightTimeChange();
@@ -275,9 +283,9 @@ void minusact()
     {
       SaveTimeToStore();
       time[3] = 0; time[2] = 0; time[1] = 0; time[0] = 0;    // reset the stopwatch
+      Timer1.stop();
       sei();         // Enable interupts again as writing to LEDS needs them  
       LED_AllOff();   // Turn all LED off again
-      Timer1.stop();
       ten_mm_ledstate=0; 
     }
     else
@@ -287,7 +295,7 @@ void minusact()
   }
   if ( currentmode == 1 )
   {
-    if ( current_standardtime == 0 ) { current_standardtime == 19; }
+    if ( current_standardtime == 0 ) { current_standardtime == 20; }
     else { current_standardtime--; }
     PresetAct(standard_times[current_standardtime].preset_times);
     CheckAfterLightTimeChange();

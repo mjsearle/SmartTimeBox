@@ -230,7 +230,7 @@ void loop() {
     if ( flash == 10 ) 
     {
         // Time out the preset just pressed flag
-        if (preset_just_pressed && ((millis() - last_preset_time > 1500))) {
+        if (preset_just_pressed && ((millis() - last_preset_time > 400))) {
             preset_just_pressed = 0;
         }
       CheckAnalogSixandSeven();
